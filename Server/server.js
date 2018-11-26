@@ -9,14 +9,14 @@ mongoose.connect(' mongodb://127.0.0.1:27017/VoterInfo');
 var User = mongoose.model('User', {
     username: String,
     password: String,
-})
+});
 
 var Message = mongoose.model('Message', {
     userTo: String,
     userFrom: String,
     content: String,
     id: Number
-})
+});
 
 var Post = mongoose.model('Post', {
     candidate: String,
@@ -25,7 +25,7 @@ var Post = mongoose.model('Post', {
     description: String,
     inFavor: Boolean,
     likes: Number
-})
+});
 
 //User authentication
 
@@ -52,7 +52,7 @@ app.post('/login', function (req, res) {
         }
 
     })
-})
+});
 
 //create user
 app.post('/signup', function (req, res) {
@@ -74,7 +74,7 @@ app.post('/signup', function (req, res) {
             userAdded: username
         })
     })
-})
+});
 
 //Candidate info
 
@@ -105,4 +105,7 @@ app.post('/candidates', function (req, res) {
             }
         }
     })
-})
+});
+
+app.listen(8100);
+console.log("listening on port 8100");
