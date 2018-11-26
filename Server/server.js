@@ -80,5 +80,29 @@ app.post('/signup', function (req, res) {
 
 //get candidate info for certain region
 app.post('/candidates', function (req, res) {
+    let userAddress = req.body.address;
+    gapi.client.setApiKey("AIzaSyCcUIUY099F6431yK7c_fxP_Ztp-AlwEfM");
+    let infoReq = gapi.client.request({
+        'path': '/civicinfo/v2/representatives',
+        'params': {
+            'address': userAddress
+        }
+    })
 
+    infoReq.execute((response) => {
+        for (let i = 0; i < response.offcies.length; i++) {
+            //get official indexes for certain office
+            let candidateIndexArray = response.offices[i].officialIndices;
+
+            //create office object
+            let office = {
+                name: response.offices[i].name,
+                officials: []
+            }
+
+            for (let j = 0; j < candidateIndexArray.length; j++) {
+                office.officials.push(response.officials[candidateIndexArray[j]])
+            }
+        }
+    })
 })
