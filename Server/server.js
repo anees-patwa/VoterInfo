@@ -31,5 +31,54 @@ var Post = mongoose.model('Post', {
 
 //logging in
 app.post('/login', function (req, res) {
+    let username = req.body.username;
+    let password = req.body.password;
+
+    User.findOne({
+        username: username
+    }, (err, user) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+
+        //verify password
+        if (password == user.password) {
+            console.log("successful login");
+            res.json({
+                success: true,
+                userLogged: username
+            })
+        }
+
+    })
+})
+
+//create user
+app.post('/signup', function (req, res) {
+    let username = req.body.username;
+    let password = req.body.password;
+
+    let newUser = new User({
+        username: username,
+        password: password
+    });
+
+    newUser.save((err, newUser) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+        res.json({
+            success: true,
+            userAdded: username
+        })
+    })
+})
+
+//Candidate info
+
+//get candidate info for certain region
+app.post('/candidates', function (req, res) {
 
 })
