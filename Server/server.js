@@ -104,6 +104,7 @@ app.post('/candidates', function (req, res) {
                 office.officials.push(response.officials[candidateIndexArray[j]])
             }
         }
+        res.json(office);
     })
 });
 
