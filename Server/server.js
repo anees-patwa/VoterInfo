@@ -2,8 +2,23 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 
+var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
+var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
+ 
+
+app.use(bodyParser.urlencoded({'extended':'true'}));          
+app.use(bodyParser.json());                                    
+app.use(bodyParser.json({ type: 'application/vnd.api+json' })); 
+app.use(methodOverride());
+ 
+app.use(function(req, res, next) {
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+   next();
+});
 //connect to db
-mongoose.connect(' mongodb://127.0.0.1:27017/VoterInfo');
+mongoose.connect('mongodb://127.0.0.1:27017/VoterInfo', { useNewUrlParser: true });
 
 //data models
 var User = mongoose.model('User', {
@@ -31,8 +46,11 @@ var Post = mongoose.model('Post', {
 
 //logging in
 app.post('/login', function (req, res) {
+    console.log("logging a user in");
+    console.log(req.body);
     let username = req.body.username;
     let password = req.body.password;
+    
 
     User.findOne({
         username: username
@@ -107,5 +125,7 @@ app.post('/candidates', function (req, res) {
     })
 });
 
-app.listen(8080);
-console.log("listening on port 8100");
+app.listen(8080, 'localhost', function(err){
+    if(err) return console.error(err);
+    console.log("listening on port 8080");
+});
