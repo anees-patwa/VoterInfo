@@ -17,9 +17,9 @@
   <h1>Sign up or Login to begin using VoterInfo</h1>
   
   <ion-label>UserName</ion-label>
-  <ion-input placeholder="Input"></ion-input>
+  <ion-input [(ngModel)]="username"></ion-input>
   <ion-label>Password</ion-label>
-  <ion-input placeholder="Input"></ion-input>
+  <ion-input [(ngModel)]="password" type="password"></ion-input>
 
   <button ion-button  id="login" (click)="login()" color="light">Login</button>
   <button ion-button (click)="createAccount()" color="light">Create Account</button>
