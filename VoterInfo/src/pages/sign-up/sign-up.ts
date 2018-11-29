@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 // import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
+import { TabsPage } from '../tabs/tabs';
 // import 'rxjs/add/operator/map';
  
 // @Injectable()
@@ -87,6 +88,9 @@ export class SignUpPage {
     this.http.post('http://localhost:8080/login', JSON.stringify(data), {headers: headers})
       .subscribe(res => {
         console.log(res.json());
+        this.navCtrl.push(TabsPage, {
+          username: this.username
+        });
       });
  
   }
@@ -103,6 +107,9 @@ export class SignUpPage {
 
     this.http.post('http://localhost:8080/signup', JSON.stringify(data), {headers: headers}).subscribe((res) => {
       console.log(res);
+      this.navCtrl.push(TabsPage, {
+        username: this.username
+      });
     }, (err) => console.log(err));
  
   }
