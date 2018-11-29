@@ -1,0 +1,26 @@
+<!--
+  Generated template for the DiscussionsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!--My comments page for editing and deleting submissions-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Discussions</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h1>Submit a Discussion</h1>
+  <ion-label>Discussion Title</ion-label>
+  <ion-input [(ngModel)]="title"></ion-input>
+  <ion-label>Content</ion-label>
+  <ion-input [(ngModel)]="content" type="text"></ion-input>
+
+  <button ion-button  id="login" (click)="login()" color="light">Submit</button>
+
+</ion-content>
