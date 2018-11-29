@@ -7,12 +7,16 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { SignUpPage} from '../pages/sign-up/sign-up';
+import { SignUpPage } from '../pages/sign-up/sign-up';
+
 //import { SignUpPage } from '../pages/sign-up/sign-up';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AddressPage } from '../pages/address/address';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { MyCommentsPage } from '../pages/my-comments/my-comments';
+import { RepsPage } from '../pages/reps/reps';
+import { RepDetailPage } from '../pages/rep-detail/rep-detail';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +27,11 @@ import { MyCommentsPage } from '../pages/my-comments/my-comments';
     TabsPage,
     SignUpPage,
     MyCommentsPage,
-    AddressPage
+    AddressPage,
+    AddressPage,
+    RepsPage,
+    RepDetailPage
+
   ],
   imports: [
     BrowserModule,
@@ -39,7 +47,11 @@ import { MyCommentsPage } from '../pages/my-comments/my-comments';
     TabsPage,
     SignUpPage,
     MyCommentsPage,
-    AddressPage
+    AddressPage,
+    AddressPage,
+    RepsPage,
+    RepDetailPage
+
   ],
   providers: [
     StatusBar,

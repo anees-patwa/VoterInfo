@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
+import { RepsPage } from '../reps/reps';
 
 /**
  * Generated class for the AddressPage page.
@@ -39,7 +40,12 @@ export class AddressPage {
     headers.append('Content-Type', 'application/json');
 
     this.http.post('http://localhost:8080/candidates', JSON.stringify(data), { headers: headers }).subscribe((res) => {
-
+      console.log("from server request");
+      //console.log(res);
+      console.log(res.json());
+      this.navCtrl.push(RepsPage, {
+        data: res.json()
+      });
     }, (err) => console.log(err));
 
   }
