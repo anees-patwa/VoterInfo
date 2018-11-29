@@ -12,11 +12,11 @@ import {DiscussionsPage} from '../discussions/discussions';
 })
 export class TabsPage {
 
-  tab1Root = HomePage;
-  tab2Root = AddressPage;
+  tab1Root = AddressPage;
+  tab2Root = DiscussionsPage;
+
+  //Messages page
   tab3Root = ContactPage;
-  tab4Root = SignUpPage;
-  tab5Root = DiscussionsPage;
 
   constructor() {
 
