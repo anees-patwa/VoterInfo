@@ -14,5 +14,8 @@
 
 
 <ion-content padding>
-
+  <ion-item-group *ngFor="let office of reps">
+    <ion-item-divider color="light">{{office.name}}</ion-item-divider>
+    <ion-item *ngFor="let rep of office.officials" (click)="goToRepDetail(rep)">{{rep.name}}</ion-item>
+  </ion-item-group>
 </ion-content>
