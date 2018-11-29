@@ -137,7 +137,7 @@ app.post('/candidates', function (req, res) {
             body = Buffer.concat(body).toString();
             body = JSON.parse(body);
             //console.log(body);
-            let officesToSend = {};
+            let officesToSend = [];
 
             for (key in body.offices) {
                 //get official indexes for certain office
@@ -150,7 +150,12 @@ app.post('/candidates', function (req, res) {
                     officials.push(body.officials[candidateIndexArray[j]])
                 }
 
-                officesToSend[body.offices[key].name] = officials;
+                let oneOffice = {
+                    name: body.offices[key].name,
+                    officials: officials
+                }
+
+                officesToSend.push(oneOffice);
 
             }
             res.json(officesToSend);
