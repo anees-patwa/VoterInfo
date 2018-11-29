@@ -1,0 +1,32 @@
+<!--
+  Generated template for the AddressPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Address</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <h1>Enter your address to see your representatives</h1>
+
+  <ion-label>Street Address</ion-label>
+  <ion-input [(ngModel)]="street" type="text"></ion-input>
+  <ion-label>City</ion-label>
+  <ion-input [(ngModel)]="city" type="text"></ion-input>
+
+  <ion-label>State</ion-label>
+  <ion-input [(ngModel)]="state" type="select"></ion-input>
+
+  <ion-label>Zip Code</ion-label>
+  <ion-input [(ngModel)]="zip" type="text"></ion-input>
+
+  <button ion-button id="submitAddress" (click)="submitAddress()">Login</button>
+
+</ion-content>
