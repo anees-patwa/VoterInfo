@@ -49,6 +49,14 @@ var Post = mongoose.model('Post', {
     likes: Number
 });
 
+var comment = mongoose.model('Comment', {
+    owner: String,
+    title: String,
+    content: String,
+    likes: Number,
+
+});
+
 //User authentication
 
 //logging in

@@ -1,55 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-// import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { TabsPage } from '../tabs/tabs';
-// import 'rxjs/add/operator/map';
- 
-// @Injectable()
-// export class Reviews {
- 
-//   userName: String = '';
-//   password: String = '';
-
-//   data: any;
- 
-//   constructor(public http: Http) {
-//     this.data = {
-//       userName: this.userName,
-//       password: this.password
-//     }
-//   }
- 
-//   login(){
-//     alert(this.data);
-//     if (this.data) {
-//       return Promise.resolve(this.data);
-//     }
- 
-//     return new Promise(resolve => {
- 
-//       this.http.get('http://localhost:8080/api/reviews')
-//         .map(res => res.json())
-//         .subscribe(data => {
-//           this.data = data;
-//           resolve(this.data);
-//         });
-//     });
- 
-//   }
- 
-//   createAccount(review){
- 
-//     let headers = new Headers();
-//     headers.append('Content-Type', 'application/json');
- 
-//     this.http.post('http://localhost:8080/login', JSON.stringify(review), {headers: headers})
-//       .subscribe(res => {
-//         console.log(res.json());
-//       });
- 
-//   }
-// }
+import { GlobalProvider } from "../../providers/global/global";
 
 
 @IonicPage()
@@ -64,12 +17,12 @@ export class SignUpPage {
   username: any;
   password: any;
   
-  constructor(public http: Http, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public http: Http, public navCtrl: NavController, public navParams: NavParams, public global: GlobalProvider) {
   }
- 
+  
 
-  
-  
+
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignUpPage');
@@ -84,7 +37,8 @@ export class SignUpPage {
     console.log(data);
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-
+    this.global.globalUser = this.username;
+    
     this.http.post('http://localhost:8080/login', JSON.stringify(data), {headers: headers})
       .subscribe(res => {
         console.log(res.json());

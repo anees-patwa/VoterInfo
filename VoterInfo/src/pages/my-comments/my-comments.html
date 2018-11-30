@@ -7,12 +7,35 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>myComments</ion-title>
+    <ion-title>My Comments</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+    <ion-card>
 
+        <ion-item>
+      
+          <!-- <h2 id="username">{{username}}</h2> -->
+          <label>{{this.global.globalUser}}</label>
+          <h3 id="title" style="text-align: center;">Title of Discussion</h3>
+        </ion-item>
+      
+        
+        <ion-card-content>
+          <p id="content">Acutal Comment</p>
+        </ion-card-content>
+      
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-start clear small>
+              <ion-icon name="thumbs-up"></ion-icon>
+              <div id="likes">Likes</div>
+            </button>
+          </ion-col>
+        </ion-row>
+      
+      </ion-card>
 </ion-content>
