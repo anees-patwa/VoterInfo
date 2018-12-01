@@ -18,4 +18,24 @@
     <ion-card-header>{{rep.name}}</ion-card-header>
   </ion-card>
 
+  <!--New comment form-->
+  <ion-label>Title</ion-label>
+  <ion-input [(ngModel)]="title" type="text"></ion-input>
+  <ion-label>Description</ion-label>
+  <ion-input [(ngModel)]="description" type="text"></ion-input>
+
+  <ion-label>Yea or Nay</ion-label>
+  <ion-checkbox [(ngModel)]="inFavor" type="checkbox"></ion-checkbox>
+
+  <button ion-button id="submitPost" (click)="submitPost()">Submit</button>
+
+
+  <!--Current Posts-->
+  <ion-card *ngFor="let post of posts">
+    <ion-card-header>{{post.title}}</ion-card-header>
+    <ion-card-content>
+      {{post.description}}
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

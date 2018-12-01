@@ -194,6 +194,51 @@ app.post('/candidates', function (req, res) {
     // })
 });
 
+app.post("/commentsCandidate", function (req, res) {
+    let repName = req.body.repName;
+
+    let posts = [];
+
+    Post.find({
+        candidate: repName
+    }, (err, post) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+
+        posts.push(post);
+
+
+    });
+
+    res.json(posts);
+})
+
+app.post("/createComment", function (req, res) {
+    let newPost = new Post({
+        candidate: req.body.candidate,
+        owner: req.body.owner,
+        title: req.body.title,
+        description: req.body.description,
+        inFavor: req.body.inFavor,
+        likes: 0
+    })
+
+    newPost.save((err, newPostRes) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+        res.json({
+            success: true,
+            postAdded: req.body.description
+        })
+
+    })
+
+})
+
 app.listen(8080, 'localhost', function (err) {
     if (err) return console.error(err);
     console.log("listening on port 8080");
