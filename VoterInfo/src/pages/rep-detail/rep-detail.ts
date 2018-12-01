@@ -64,6 +64,23 @@ export class RepDetailPage {
 
     //append comment to comment list
 
+
+  }
+
+  like(id) {
+    for (let item of this.posts) {
+      if (item._id == id) {
+        item.likes += 1;
+      }
+    }
+    let data = {
+      id: id
+    }
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this.http.post('http://localhost:8080/likeComment', JSON.stringify(data), { headers: headers }).subscribe((res) => {
+      console.log("liking a comment", res);
+    })
   }
 
 }

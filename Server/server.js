@@ -217,6 +217,38 @@ app.post("/createComment", function (req, res) {
 
 })
 
+app.post("/likeComment", function (req, res) {
+    let id = req.body.id;
+
+
+
+    Post.findById(id, (err, postByFind) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+
+        let like = postByFind.likes + 1;
+
+        Post.findByIdAndUpdate(id, {
+            likes: like
+        }, (err, post) => {
+            if (err) {
+                console.log(error);
+                return;
+            }
+
+            console.log(post);
+        })
+
+
+
+
+        //console.log(post);
+        res.json(postByFind);
+    })
+})
+
 app.listen(8080, 'localhost', function (err) {
     if (err) return console.error(err);
     console.log("listening on port 8080");

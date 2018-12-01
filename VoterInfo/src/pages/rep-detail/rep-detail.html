@@ -22,6 +22,7 @@
     <ion-card-content class="center">
       <h3 class="center">{{rep.party}}</h3>
     </ion-card-content>
+
   </ion-card>
 
   <!--New comment form-->
@@ -36,6 +37,8 @@
   <br>
 
   <button ion-button id="submitPost" (click)="submitPost()">Submit</button>
+  <br>
+  <br>
 
 
   <!--Current Posts-->
@@ -43,6 +46,13 @@
     <ion-card-header>{{post.title}}</ion-card-header>
     <ion-card-content>
       {{post.description}}
+      <div item-end>
+        <button ion-button icon-start clear small (click)="like(post._id)">
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>{{post.likes}}</div>
+        </button>
+      </div>
+
     </ion-card-content>
   </ion-card>
 
