@@ -174,30 +174,11 @@ app.post('/candidates', function (req, res) {
         console.error(e);
     });
     gapiReq.end();
-
-    // infoReq.execute((response) => {
-    //     for (let i = 0; i < response.offcies.length; i++) {
-    //         //get official indexes for certain office
-    //         let candidateIndexArray = response.offices[i].officialIndices;
-
-    //         //create office object
-    //         let office = {
-    //             name: response.offices[i].name,
-    //             officials: []
-    //         }
-
-    //         for (let j = 0; j < candidateIndexArray.length; j++) {
-    //             office.officials.push(response.officials[candidateIndexArray[j]])
-    //         }
-    //     }
-    //     res.json(office);
-    // })
 });
 
 app.post("/commentsCandidate", function (req, res) {
     let repName = req.body.repName;
-
-    let posts = [];
+    console.log(repName);
 
     Post.find({
         candidate: repName
@@ -207,12 +188,9 @@ app.post("/commentsCandidate", function (req, res) {
             return;
         }
 
-        posts.push(post);
-
-
+        res.json(post);
     });
 
-    res.json(posts);
 })
 
 app.post("/createComment", function (req, res) {

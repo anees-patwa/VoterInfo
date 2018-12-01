@@ -23,23 +23,13 @@ export class RepDetailPage {
   inFavor: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public global: GlobalProvider, public http: Http) {
-    this.rep = navParams.data;
+    this.rep = navParams.data.rep;
     console.log(this.rep);
 
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    this.posts = navParams.data.posts;
+    console.log("posts", this.posts);
 
-    let data = {
-      repName: this.rep.name
-    };
 
-    this.http.post('http://localhost:8080/commentsCandidate', JSON.stringify(data), { headers: headers }).subscribe((res) => {
-      console.log(res.json());
-      this.posts = res.json();
-
-    }, (err) => {
-      console.error(err);
-    })
 
 
     //get comments for this rep

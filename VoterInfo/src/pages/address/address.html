@@ -16,16 +16,16 @@
 <ion-content padding>
   <h1>Enter your address to see your representatives</h1>
 
-  <ion-label>Street Address</ion-label>
-  <ion-input [(ngModel)]="street" type="text"></ion-input>
-  <ion-label>City</ion-label>
-  <ion-input [(ngModel)]="city" type="text"></ion-input>
+  <ion-label stacked>Street Address</ion-label>
+  <ion-input [(ngModel)]="street" type="text" placeholder="Street Address"></ion-input>
+  <ion-label stacked>City</ion-label>
+  <ion-input [(ngModel)]="city" type="text" placeholder="City"></ion-input>
 
-  <ion-label>State</ion-label>
-  <ion-input [(ngModel)]="state" type="select"></ion-input>
+  <ion-label stacked>State</ion-label>
+  <ion-input [(ngModel)]="state" type="select" placeholder="Select State"></ion-input>
 
-  <ion-label>Zip Code</ion-label>
-  <ion-input [(ngModel)]="zip" type="text"></ion-input>
+  <ion-label stacked>Zip Code</ion-label>
+  <ion-input [(ngModel)]="zip" type="text" placeholder="Zip Code"></ion-input>
 
   <button ion-button id="submitAddress" (click)="submitAddress()">Login</button>
 

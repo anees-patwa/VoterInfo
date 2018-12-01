@@ -15,17 +15,25 @@
 
 <ion-content padding>
   <ion-card>
-    <ion-card-header>{{rep.name}}</ion-card-header>
+    <ion-avatar item-start>
+      <img src={{rep.photoUrl}} width="50px">
+    </ion-avatar>
+    <ion-card-header class="center">{{rep.name}}</ion-card-header>
+    <ion-card-content class="center">
+      <h3 class="center">{{rep.party}}</h3>
+    </ion-card-content>
   </ion-card>
 
   <!--New comment form-->
-  <ion-label>Title</ion-label>
-  <ion-input [(ngModel)]="title" type="text"></ion-input>
-  <ion-label>Description</ion-label>
-  <ion-input [(ngModel)]="description" type="text"></ion-input>
+  <ion-label stacked>Title</ion-label>
+  <ion-input [(ngModel)]="title" type="text" placeholder="Title"></ion-input>
+  <ion-label stacked>Description</ion-label>
+  <ion-input [(ngModel)]="description" type="text" placeholder="Description"></ion-input>
 
-  <ion-label>Yea or Nay</ion-label>
+  <ion-label stacked>Yea or Nay</ion-label>
   <ion-checkbox [(ngModel)]="inFavor" type="checkbox"></ion-checkbox>
+  <br>
+  <br>
 
   <button ion-button id="submitPost" (click)="submitPost()">Submit</button>
 
