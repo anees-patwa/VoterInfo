@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var https = require('https');
+var socketio = require("socket.io");
 
 var bodyParser = require('body-parser'); // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
@@ -247,6 +248,14 @@ app.post("/likeComment", function (req, res) {
         //console.log(post);
         res.json(postByFind);
     })
+})
+
+var io = socketio.listen(app);
+
+io.on("connection", (socket) => {
+    console.log("messaging started");
+
+    socket.on("message from server")
 })
 
 app.listen(8080, 'localhost', function (err) {
