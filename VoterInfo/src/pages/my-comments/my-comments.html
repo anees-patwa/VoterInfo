@@ -14,28 +14,31 @@
 
 
 <ion-content padding>
-    <ion-card>
+    <ion-card *ngFor="let comment of comments">
 
         <ion-item>
       
           <!-- <h2 id="username">{{username}}</h2> -->
           <label>{{this.global.globalUser}}</label>
-          <h3 id="title" style="text-align: center;">Title of Discussion</h3>
+          <h3 id="title" style="text-align: center;">{{comment.title}}</h3>
+          <h3>Candidate: {{comment.candidate}}</h3>
         </ion-item>
       
         
         <ion-card-content>
-          <p id="content">Acutal Comment</p>
+          <p id="content"></p>
+          <ion-item>{{comment.description}}</ion-item>
         </ion-card-content>
       
         <ion-row>
           <ion-col>
             <button ion-button icon-start clear small>
               <ion-icon name="thumbs-up"></ion-icon>
-              <div id="likes">Likes</div>
+              <div id="likes">{{comment.likes}}</div>
             </button>
           </ion-col>
         </ion-row>
       
       </ion-card>
+      <button ion-button id="submitPost" (click)="submitPost()">Submit</button>
 </ion-content>
