@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var https = require('https');
-
+var str = "";
 var bodyParser = require('body-parser'); // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
@@ -56,6 +56,24 @@ var comment = mongoose.model('Comment', {
     likes: Number,
 
 });
+
+app.post("/my-comments", function (req, res) {
+    // console.log(owner);
+    console.log(req.body);
+     let user = req.body.username;
+
+     Post.find({
+        owner: user
+    }, (err, post) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+        res.json(post);
+    });
+
+});
+
 
 //User authentication
 
