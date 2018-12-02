@@ -174,25 +174,80 @@ app.post('/candidates', function (req, res) {
         console.error(e);
     });
     gapiReq.end();
-
-    // infoReq.execute((response) => {
-    //     for (let i = 0; i < response.offcies.length; i++) {
-    //         //get official indexes for certain office
-    //         let candidateIndexArray = response.offices[i].officialIndices;
-
-    //         //create office object
-    //         let office = {
-    //             name: response.offices[i].name,
-    //             officials: []
-    //         }
-
-    //         for (let j = 0; j < candidateIndexArray.length; j++) {
-    //             office.officials.push(response.officials[candidateIndexArray[j]])
-    //         }
-    //     }
-    //     res.json(office);
-    // })
 });
+
+app.post("/commentsCandidate", function (req, res) {
+    let repName = req.body.repName;
+    console.log(repName);
+
+    Post.find({
+        candidate: repName
+    }, (err, post) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+
+        res.json(post);
+    });
+
+})
+
+app.post("/createComment", function (req, res) {
+    let newPost = new Post({
+        candidate: req.body.candidate,
+        owner: req.body.owner,
+        title: req.body.title,
+        description: req.body.description,
+        inFavor: req.body.inFavor,
+        likes: 0
+    })
+
+    newPost.save((err, newPostRes) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+        res.json({
+            success: true,
+            postAdded: req.body.description
+        })
+
+    })
+
+})
+
+app.post("/likeComment", function (req, res) {
+    let id = req.body.id;
+
+
+
+    Post.findById(id, (err, postByFind) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+
+        let like = postByFind.likes + 1;
+
+        Post.findByIdAndUpdate(id, {
+            likes: like
+        }, (err, post) => {
+            if (err) {
+                console.log(error);
+                return;
+            }
+
+            console.log(post);
+        })
+
+
+
+
+        //console.log(post);
+        res.json(postByFind);
+    })
+})
 
 app.listen(8080, 'localhost', function (err) {
     if (err) return console.error(err);
