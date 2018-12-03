@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { GlobalProvider } from "../../providers/global/global";
 import { Http, Headers } from '@angular/http';
-
+import {EditCommentPage} from '../edit-comment/edit-comment';
 /**
  * Generated class for the MyCommentsPage page.
  *
@@ -21,7 +21,7 @@ export class MyCommentsPage {
   comments: any[];
   title: any;
   description: any;
-  id: any;
+  _id: any;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public global: GlobalProvider, public http: Http) {
   
@@ -29,16 +29,36 @@ export class MyCommentsPage {
 
   ionViewDidLoad() {
     this.refreshComments();
-    document.getElementById('editForm').style.display = "none";
+    // document.getElementById('editForm').style.display = "none";
   }
  
   showEdit(){
-    document.getElementById('editForm').style.display = "block";
+    // document.getElementById('editForm').style.display = "block";
   }
-  editComment(){
+
+  deleteComment(){
     let username = this.global.globalUser;
     let title = this.title; 
-    let description = this.description
+    let headers = new Headers();
+  
+    headers.append('Content-Type', 'application/json');
+
+    let newData = {
+      username: username,
+      title: title
+    };
+  
+    this.http.post('http://localhost:8080/delete', JSON.stringify(newData), { headers: headers }).subscribe((res) => {
+      console.log(res.json());
+    }, (err) => {
+      console.error(err);
+    })
+  }
+  
+  editComment(id){
+    let username = this.global.globalUser;
+    let title = this.title; 
+    let description = this.description;
     let headers = new Headers();
   
     headers.append('Content-Type', 'application/json');
@@ -46,15 +66,20 @@ export class MyCommentsPage {
     let data = {
       username: username,
       title: title,
-      description: description
+      description: description,
+      id: id
     };
-    console.log(data)
+
     this.http.post('http://localhost:8080/edit', JSON.stringify(data), { headers: headers }).subscribe((res) => {
       console.log(res.json());
+      this.navCtrl.push(EditCommentPage, {
+        id: id
+      });
+      
     }, (err) => {
       console.error(err);
     })
-    document.getElementById('editForm').style.display = "none";
+    // document.getElementById('editForm').style.display = "none";
   }
 
   refreshComments(){

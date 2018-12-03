@@ -18,6 +18,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { MyCommentsPage } from '../pages/my-comments/my-comments';
 import { RepsPage } from '../pages/reps/reps';
 import { RepDetailPage } from '../pages/rep-detail/rep-detail';
+import {EditCommentPage} from '../pages/edit-comment/edit-comment';
 
 
 @NgModule({
@@ -32,8 +33,8 @@ import { RepDetailPage } from '../pages/rep-detail/rep-detail';
     AddressPage,
     AddressPage,
     RepsPage,
-    RepDetailPage
-
+    RepDetailPage,
+    EditCommentPage
   ],
   imports: [
     BrowserModule,
@@ -52,7 +53,8 @@ import { RepDetailPage } from '../pages/rep-detail/rep-detail';
     AddressPage,
     AddressPage,
     RepsPage,
-    RepDetailPage
+    RepDetailPage,
+    EditCommentPage
 
   ],
   providers: [
