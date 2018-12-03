@@ -21,15 +21,47 @@ export class MyCommentsPage {
   comments: any[];
   title: any;
   description: any;
+  id: any;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public global: GlobalProvider, public http: Http) {
   
   }
 
   ionViewDidLoad() {
+    this.refreshComments();
+    document.getElementById('editForm').style.display = "none";
+  }
+ 
+  showEdit(){
+    document.getElementById('editForm').style.display = "block";
+  }
+  editComment(){
     let username = this.global.globalUser;
-    // alert(username);
+    let title = this.title; 
+    let description = this.description
     let headers = new Headers();
+  
+    headers.append('Content-Type', 'application/json');
+
+    let data = {
+      username: username,
+      title: title,
+      description: description
+    };
+    console.log(data)
+    this.http.post('http://localhost:8080/edit', JSON.stringify(data), { headers: headers }).subscribe((res) => {
+      console.log(res.json());
+    }, (err) => {
+      console.error(err);
+    })
+    document.getElementById('editForm').style.display = "none";
+  }
+
+  refreshComments(){
+    let username = this.global.globalUser;
+
+    let headers = new Headers();
+  
     headers.append('Content-Type', 'application/json');
 
     let data = {
@@ -44,5 +76,5 @@ export class MyCommentsPage {
       console.error(err);
     })
   }
- 
+
 }

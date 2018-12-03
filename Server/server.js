@@ -74,6 +74,26 @@ app.post("/my-comments", function (req, res) {
 
 });
 
+app.post("/edit", function(req, res){
+    let user = req.body.username;
+    let title = req.body.title;
+    let des = req.body.description;
+    Post.updateOne(
+        {owner: user, title: title},
+        {$set: {description: des}},
+        {
+            upsert: false 
+        }
+    ,(err, post) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+        res.json(post);
+    });
+
+
+});
 
 //User authentication
 
