@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var https = require('https');
+var http = require('http');
 var socketio = require("socket.io");
 
 var bodyParser = require('body-parser'); // pull information from HTML POST (express4)
@@ -35,10 +36,11 @@ var User = mongoose.model('User', {
 });
 
 var Message = mongoose.model('Message', {
-    userTo: String,
     userFrom: String,
-    content: String,
-    id: Number
+    content: [{
+        userTo: String,
+        message: String
+    }]
 });
 
 var Post = mongoose.model('Post', {
@@ -211,7 +213,8 @@ app.post("/createComment", function (req, res) {
         }
         res.json({
             success: true,
-            postAdded: req.body.description
+            postAdded: req.body.description,
+            _id: newPostRes._id
         })
 
     })
@@ -220,14 +223,15 @@ app.post("/createComment", function (req, res) {
 
 app.post("/likeComment", function (req, res) {
     let id = req.body.id;
-
-
+    console.log(id);
 
     Post.findById(id, (err, postByFind) => {
         if (err) {
             console.error(err);
             return;
         }
+
+        console.log(postByFind);
 
         let like = postByFind.likes + 1;
 
@@ -250,15 +254,47 @@ app.post("/likeComment", function (req, res) {
     })
 })
 
-var io = socketio.listen(app);
+app.post("/messageList", function (req, res) {
+    let username = req.userFrom;
+
+    Message.findOne({
+        userFrom: username
+    }, (err, arrayOfMessages) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+
+        if (arrayOfMessages != null) {
+            let overview = arrayOfMessages.content;
+
+            overview = overview.map(function (val) {
+                return val.userTo;
+            });
+
+            console.log("overview", overview);
+
+            res.json(overview);
+            res.end();
+        }
+
+
+
+
+    })
+})
+var server = http.createServer(app);
+var io = socketio.listen(server);
 
 io.on("connection", (socket) => {
     console.log("messaging started");
 
-    socket.on("message from server")
+    socket.on("message from server", (req) => {
+        console.log("something");
+    })
 })
 
-app.listen(8080, 'localhost', function (err) {
+server.listen(8080, 'localhost', function (err) {
     if (err) return console.error(err);
     console.log("listening on port 8080");
 });

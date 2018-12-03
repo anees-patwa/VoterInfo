@@ -9,6 +9,8 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SignUpPage } from '../pages/sign-up/sign-up';
 import { GlobalProvider } from "../providers/global/global";
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
 
 
 //import { SignUpPage } from '../pages/sign-up/sign-up';
@@ -18,6 +20,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { MyCommentsPage } from '../pages/my-comments/my-comments';
 import { RepsPage } from '../pages/reps/reps';
 import { RepDetailPage } from '../pages/rep-detail/rep-detail';
+import { MessagesPage } from '../pages/messages/messages';
 
 
 @NgModule({
@@ -32,13 +35,15 @@ import { RepDetailPage } from '../pages/rep-detail/rep-detail';
     AddressPage,
     AddressPage,
     RepsPage,
-    RepDetailPage
+    RepDetailPage,
+    MessagesPage
 
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    SocketIoModule.forRoot(config)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -52,7 +57,8 @@ import { RepDetailPage } from '../pages/rep-detail/rep-detail';
     AddressPage,
     AddressPage,
     RepsPage,
-    RepDetailPage
+    RepDetailPage,
+    MessagesPage
 
   ],
   providers: [
