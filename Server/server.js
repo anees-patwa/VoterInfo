@@ -95,18 +95,17 @@ app.post("/edit", function(req, res){
 });
 
 app.post("/delete", function(req, res){
-    let user = req.body.username;
-    let title = req.body.title;
-    var myQuery = { owner: user, title: title };
-    Post.deleteOne(
-        myQuery,
-    (err) => {
-        if (err) {
-            res.send(err);
-            return;
-        }
-        res.send("successfully deleted");
-    });
+
+    let id = req.body.id;
+    Post.findByIdAndDelete(
+        {_id: id},
+    (err, post) => {
+            if (err) {
+                res.send(err);
+                return;
+            }
+            res.json(post);
+        });
 
 });
 

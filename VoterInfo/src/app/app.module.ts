@@ -34,6 +34,7 @@ import {EditCommentPage} from '../pages/edit-comment/edit-comment';
     AddressPage,
     RepsPage,
     RepDetailPage,
+    
     EditCommentPage
   ],
   imports: [

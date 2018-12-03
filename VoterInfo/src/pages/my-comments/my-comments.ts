@@ -36,19 +36,20 @@ export class MyCommentsPage {
     // document.getElementById('editForm').style.display = "block";
   }
 
-  deleteComment(){
+  deleteComment(id){
     let username = this.global.globalUser;
     let title = this.title; 
     let headers = new Headers();
   
     headers.append('Content-Type', 'application/json');
 
-    let newData = {
+    let data = {
       username: username,
-      title: title
+      title: title,
+      id: id
     };
   
-    this.http.post('http://localhost:8080/delete', JSON.stringify(newData), { headers: headers }).subscribe((res) => {
+    this.http.post('http://localhost:8080/delete', JSON.stringify(data), { headers: headers }).subscribe((res) => {
       console.log(res.json());
     }, (err) => {
       console.error(err);
