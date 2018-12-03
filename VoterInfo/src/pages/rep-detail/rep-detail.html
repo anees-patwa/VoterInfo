@@ -21,6 +21,7 @@
     <ion-card-header class="center">{{rep.name}}</ion-card-header>
     <ion-card-content class="center">
       <h3 class="center">{{rep.party}}</h3>
+      <button ion-button (click)="newMessage(rep.name)">Message</button>
       <a href={{rep.urls[0]}} target="_blank">Candidate Website</a>
       <p *ngFor="let channel of rep.channels">{{channel.type}}: {{channel.id}}</p>
     </ion-card-content>

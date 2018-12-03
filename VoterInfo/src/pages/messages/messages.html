@@ -14,5 +14,10 @@
 
 
 <ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let recipient of recipients" (click)="convo(recipient)">
+      {{recipient}}
+    </ion-item>
+  </ion-list>
 
 </ion-content>

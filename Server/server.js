@@ -38,10 +38,8 @@ var User = mongoose.model('User', {
 
 var Message = mongoose.model('Message', {
     userFrom: String,
-    content: [{
-        userTo: String,
-        message: String
-    }]
+    userTo: String,
+    content: String
 });
 
 var Post = mongoose.model('Post', {
@@ -82,13 +80,10 @@ app.post("/edit", function (req, res) {
     let des = req.body.description;
     let id = req.body.id;
     Post.findByIdAndUpdate({
-            _id: id
-        }, {
-            $set: {
-                description: des
-            }
-        }, {
-            upsert: false
+        _id: id
+    }, {
+        $set: {
+            description: des
         }
     }, {
         upsert: false
@@ -315,13 +310,16 @@ app.post("/likeComment", function (req, res) {
 
         //console.log(post);
         res.json(postByFind);
-    })
-})
+    });
+});
 
 app.post("/messageList", function (req, res) {
-    let username = req.userFrom;
+    let username = req.body.userFrom;
 
-    Message.findOne({
+    console.log("this is the sender");
+    console.log(username);
+
+    Message.find({
         userFrom: username
     }, (err, arrayOfMessages) => {
         if (err) {
@@ -329,25 +327,52 @@ app.post("/messageList", function (req, res) {
             return;
         }
 
-        if (arrayOfMessages != null) {
-            let overview = arrayOfMessages.content;
+        console.log("here's the array of found messages", arrayOfMessages);
 
-            overview = overview.map(function (val) {
+        if (arrayOfMessages != null) {
+            let recipientList = arrayOfMessages.map(function (val) {
                 return val.userTo;
             });
 
-            console.log("overview", overview);
+            console.log("overview", recipientList);
+
+            let recipientSet = new Set(recipientList);
+
+            console.log("as a set", recipientSet);
+
+            let overview = []
+
+            for (recipient of recipientSet) {
+                overview.push(recipient);
+            }
 
             res.json(overview);
-            res.end();
         }
 
 
 
 
-    })
-})
-var server = http.createServer(app);
+    });
+});
+
+app.post("/sentMessage", function (req, res) {
+    let newMessage = new Message({
+        userFrom: req.body.userFrom,
+        userTo: req.body.userTo,
+        content: req.body.message
+    });
+
+    newMessage.save((err, response) => {
+        if (err) {
+            console.log("heres an error with saving the new message below");
+            console.error(err);
+        }
+
+        res.json(response);
+    });
+});
+
+/*var server = http.createServer(app);
 var io = socketio.listen(server);
 
 io.on("connection", (socket) => {
@@ -356,9 +381,9 @@ io.on("connection", (socket) => {
     socket.on("message from server", (req) => {
         console.log("something");
     })
-})
+})*/
 
-server.listen(8080, 'localhost', function (err) {
+app.listen(8080, 'localhost', function (err) {
     if (err) return console.error(err);
     console.log("listening on port 8080");
 });

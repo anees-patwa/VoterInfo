@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { GlobalProvider } from '../../providers/global/global';
 import { Http, Headers } from '@angular/http';
+import { NewMessagePage } from '../new-message/new-message';
 
 /**
  * Generated class for the RepDetailPage page.
@@ -44,7 +45,7 @@ export class RepDetailPage {
     let username = this.global.globalUser;
     let candidate = this.rep.name;
 
-    if (this.inFavor != true || this.inFavor != false) {
+    if (this.inFavor == null) {
       this.inFavor = false;
     }
 
@@ -95,6 +96,15 @@ export class RepDetailPage {
     headers.append('Content-Type', 'application/json');
     this.http.post('http://localhost:8080/likeComment', JSON.stringify(data), { headers: headers }).subscribe((res) => {
       console.log("liking a comment", res);
+    }, (err) => {
+      console.error(err);
+    })
+  }
+
+  newMessage(name) {
+    console.log(name);
+    this.navCtrl.push(NewMessagePage, {
+      name: name
     })
   }
 
