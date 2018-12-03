@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class GlobalProvider {
   public globalUser: String;
+  public comments: any[];
   constructor() {
     console.log('Hello GlobalProvider Provider');
   }

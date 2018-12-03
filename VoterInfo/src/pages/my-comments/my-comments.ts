@@ -31,10 +31,6 @@ export class MyCommentsPage {
     this.refreshComments();
     // document.getElementById('editForm').style.display = "none";
   }
- 
-  showEdit(){
-    // document.getElementById('editForm').style.display = "block";
-  }
 
   deleteComment(id){
     let username = this.global.globalUser;
@@ -48,7 +44,13 @@ export class MyCommentsPage {
       title: title,
       id: id
     };
+
+    for(let i = 0; i < this.comments.length; ++i){
+      if(data.id == this.comments[i]._id){
+        this.comments.splice(this.comments[i]._id, 1);
+      }
   
+    }
     this.http.post('http://localhost:8080/delete', JSON.stringify(data), { headers: headers }).subscribe((res) => {
       console.log(res.json());
     }, (err) => {

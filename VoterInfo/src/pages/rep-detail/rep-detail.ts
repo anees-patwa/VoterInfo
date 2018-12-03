@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { GlobalProvider } from '../../providers/global/global';
 import { Http, Headers } from '@angular/http';
 
+
 /**
  * Generated class for the RepDetailPage page.
  *
