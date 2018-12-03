@@ -5,6 +5,7 @@ var https = require('https');
 var http = require('http');
 var socketio = require("socket.io");
 
+var str = "";
 var bodyParser = require('body-parser'); // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 
@@ -57,6 +58,47 @@ var comment = mongoose.model('Comment', {
     title: String,
     content: String,
     likes: Number,
+
+});
+
+app.post("/my-comments", function (req, res) {
+    // console.log(owner);
+    console.log(req.body);
+    let user = req.body.username;
+
+    Post.find({
+        owner: user
+    }, (err, post) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+        res.json(post);
+    });
+
+});
+
+app.post("/edit", function (req, res) {
+    let user = req.body.username;
+    let title = req.body.title;
+    let des = req.body.description;
+    Post.updateOne({
+        owner: user,
+        title: title
+    }, {
+        $set: {
+            description: des
+        }
+    }, {
+        upsert: false
+    }, (err, post) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+        res.json(post);
+    });
+
 
 });
 

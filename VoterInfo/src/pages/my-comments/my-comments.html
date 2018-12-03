@@ -14,28 +14,44 @@
 
 
 <ion-content padding>
-    <ion-card>
+    <ion-card *ngFor="let comment of comments" style="width: 60% !important; margin-left: 20% !important; margin-bottom: 5% !important; height: 40% !important;">
 
         <ion-item>
       
           <!-- <h2 id="username">{{username}}</h2> -->
           <label>{{this.global.globalUser}}</label>
-          <h3 id="title" style="text-align: center;">Title of Discussion</h3>
+          <h1 style="display: none !important;">{{comment._id}}</h1>
+          <h2 id="title" style="text-align: center; font-weight: bold;">{{comment.title}}</h2>
+          <h2>Candidate: {{comment.candidate}}</h2>
         </ion-item>
       
         
         <ion-card-content>
-          <p id="content">Acutal Comment</p>
+          <p id="content">{{comment.description}}</p>
         </ion-card-content>
       
         <ion-row>
           <ion-col>
             <button ion-button icon-start clear small>
               <ion-icon name="thumbs-up"></ion-icon>
-              <div id="likes">Likes</div>
+              <div id="likes">{{comment.likes}}</div>
             </button>
           </ion-col>
         </ion-row>
-      
+        
       </ion-card>
+      
+      <button ion-button id="submitPost" (click)="refreshComments()">Refresh Comments</button>
+      <button ion-button id="submitPost" style="float: right;" (click)="showEdit()">Edit Comment</button>
+
+    <ion-card id="editForm">
+        <h1>Edit any comment below </h1>
+  
+        <ion-label>Title of Comment</ion-label>
+        <ion-input [(ngModel)]="title"></ion-input>
+        <ion-label>New Description</ion-label>
+        <ion-input [(ngModel)]="description" type="text"></ion-input>
+      
+        <button ion-button  id="login" (click)="editComment()" color="light">Finish</button>
+    </ion-card>
 </ion-content>
