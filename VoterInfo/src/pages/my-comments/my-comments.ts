@@ -45,12 +45,19 @@ export class MyCommentsPage {
       id: id
     };
 
+
+
     for(let i = 0; i < this.comments.length; ++i){
-      if(data.id == this.comments[i]._id){
-        this.comments.splice(this.comments[i]._id, 1);
-      }
+      console.log("This is checking objects " + Object.is(data.id, this.comments[i]._id));
   
+      if(Object.is(data.id, this.comments[i]._id)){
+        this.comments.splice(i, 1);
+      }
     }
+
+  
+
+
     this.http.post('http://localhost:8080/delete', JSON.stringify(data), { headers: headers }).subscribe((res) => {
       console.log(res.json());
     }, (err) => {
@@ -73,6 +80,12 @@ export class MyCommentsPage {
       id: id
     };
 
+    // for(let i = 0; i < this.comments.length; ++i){
+    //   if(data.id == this.comments[i]._id){
+    //     this.comments.splice(this.comments[i]._id, 1);
+    //   }
+    // }
+
     this.http.post('http://localhost:8080/edit', JSON.stringify(data), { headers: headers }).subscribe((res) => {
       console.log(res.json());
       this.navCtrl.push(EditCommentPage, {
@@ -82,6 +95,13 @@ export class MyCommentsPage {
     }, (err) => {
       console.error(err);
     })
+
+    // for(let i = 0; i < this.comments.length; ++i){
+    //   if(data.id == this.comments[i]._id){
+    //     this.comments.splice(this.comments[i]._id, 0, "data");
+    //   }
+    // }
+
     // document.getElementById('editForm').style.display = "none";
   }
 
