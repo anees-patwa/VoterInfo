@@ -79,15 +79,16 @@ app.post("/my-comments", function (req, res) {
 });
 
 app.post("/edit", function (req, res) {
-    let user = req.body.username;
-    let title = req.body.title;
     let des = req.body.description;
-    Post.updateOne({
-        owner: user,
-        title: title
-    }, {
-        $set: {
-            description: des
+    let id = req.body.id;
+    Post.findByIdAndUpdate({
+            _id: id
+        }, {
+            $set: {
+                description: des
+            }
+        }, {
+            upsert: false
         }
     }, {
         upsert: false
@@ -101,6 +102,27 @@ app.post("/edit", function (req, res) {
 
 
 });
+
+app.post("/delete", function (req, res) {
+    let user = req.body.username;
+    let title = req.body.title;
+    var myQuery = {
+        owner: user,
+        title: title
+    };
+    Post.deleteOne(
+        myQuery,
+        (err) => {
+            if (err) {
+                res.send(err);
+                return;
+            }
+            res.send("successfully deleted");
+        });
+
+});
+
+
 
 //User authentication
 

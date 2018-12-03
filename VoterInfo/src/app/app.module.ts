@@ -21,6 +21,7 @@ import { MyCommentsPage } from '../pages/my-comments/my-comments';
 import { RepsPage } from '../pages/reps/reps';
 import { RepDetailPage } from '../pages/rep-detail/rep-detail';
 import { MessagesPage } from '../pages/messages/messages';
+import { EditCommentPage } from '../pages/edit-comment/edit-comment';
 
 
 @NgModule({
@@ -36,8 +37,8 @@ import { MessagesPage } from '../pages/messages/messages';
     AddressPage,
     RepsPage,
     RepDetailPage,
-    MessagesPage
-
+    MessagesPage,
+    EditCommentPage
   ],
   imports: [
     BrowserModule,
@@ -58,7 +59,8 @@ import { MessagesPage } from '../pages/messages/messages';
     AddressPage,
     RepsPage,
     RepDetailPage,
-    MessagesPage
+    MessagesPage,
+    EditCommentPage
 
   ],
   providers: [

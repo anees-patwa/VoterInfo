@@ -37,21 +37,23 @@
               <div id="likes">{{comment.likes}}</div>
             </button>
           </ion-col>
+          <ion-col>
+            <button ion-button (click)="editComment(comment._id)">Edit</button>
+          </ion-col>
         </ion-row>
         
       </ion-card>
       
       <button ion-button id="submitPost" (click)="refreshComments()">Refresh Comments</button>
-      <button ion-button id="submitPost" style="float: right;" (click)="showEdit()">Edit Comment</button>
+      <!-- <button ion-button id="submitPost" style="float: right;" (click)="showEdit()">Edit Comment</button>
+      <button ion-button id="submitPost" style="margin: 0 auto !important;" (click)="deleteComment()">Delete</button> -->
 
-    <ion-card id="editForm">
-        <h1>Edit any comment below </h1>
+
+    <!-- <ion-card id="deleteForm">
+        <h1>Delete any comment below</h1>
   
         <ion-label>Title of Comment</ion-label>
         <ion-input [(ngModel)]="title"></ion-input>
-        <ion-label>New Description</ion-label>
-        <ion-input [(ngModel)]="description" type="text"></ion-input>
-      
-        <button ion-button  id="login" (click)="editComment()" color="light">Finish</button>
-    </ion-card>
+
+        <button ion-button  id="login" (click)="deleteComment()" color="light">Delete</button> -->
 </ion-content>
