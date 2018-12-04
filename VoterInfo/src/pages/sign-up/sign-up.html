@@ -15,14 +15,16 @@
 
 <ion-content padding>
   <h1>Sign up or Login to begin using VoterInfo</h1>
-  
+
   <ion-label>UserName</ion-label>
   <ion-input [(ngModel)]="username"></ion-input>
   <ion-label>Password</ion-label>
   <ion-input [(ngModel)]="password" type="password"></ion-input>
+  <ion-label>Are you a Representative?</ion-label>
+  <ion-checkbox [(ngModel)]="isRep"></ion-checkbox>
 
-  <button ion-button  id="login" (click)="login()" color="light">Login</button>
+  <button ion-button id="login" (click)="login()" color="light">Login</button>
   <button ion-button (click)="createAccount()" color="light">Create Account</button>
-  
-  
+
+
 </ion-content>
