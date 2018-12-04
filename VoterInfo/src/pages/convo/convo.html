@@ -19,6 +19,7 @@
       <ion-col col-9 class="other" *ngIf="message.userFrom !== userFrom">
         <span>{{ message.userFrom }}:</span><br>
         <span>{{ message.content }}</span>
+        <ion-img src="message.content"></ion-img>
       </ion-col>
 
       <ion-col offset-3 col-9 class="mine" *ngIf="message.userFrom === userFrom">

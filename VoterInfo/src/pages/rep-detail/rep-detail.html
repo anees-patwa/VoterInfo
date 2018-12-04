@@ -55,8 +55,12 @@
         <button ion-button icon-start clear small (click)="like(post._id)">
           <ion-icon name="thumbs-up"></ion-icon>
           <div>{{post.likes}}</div>
+
         </button>
+        <ion-icon *ngIf="post.inFavor" name="checkmark-circle-outline"></ion-icon>
+        <ion-icon *ngIf="!post.inFavor" name="close-circle"></ion-icon>
       </div>
+
 
     </ion-card-content>
   </ion-card>
