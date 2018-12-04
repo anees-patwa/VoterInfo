@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { GlobalProvider } from '../../providers/global/global';
 import { Http, Headers } from '@angular/http';
+import { NewMessagePage } from '../new-message/new-message';
 
 /**
  * Generated class for the RepDetailPage page.
@@ -44,6 +45,10 @@ export class RepDetailPage {
     let username = this.global.globalUser;
     let candidate = this.rep.name;
 
+    if (this.inFavor == null) {
+      this.inFavor = false;
+    }
+
     let data = {
       owner: username,
       candidate: candidate,
@@ -56,7 +61,17 @@ export class RepDetailPage {
 
     this.http.post('http://localhost:8080/createComment', JSON.stringify(data), { headers: headers }).subscribe((res) => {
       console.log("response after creating comment", res.json())
-      this.posts.push(data);
+      let newComment = {
+        owner: data.owner,
+        candidate: data.candidate,
+        title: data.title,
+        likes: 0,
+        description: data.description,
+        inFavor: data.inFavor,
+        _id: res.json()._id
+      }
+      this.posts.push(newComment);
+      console.log(newComment);
 
     }, (err) => {
       console.error(err);
@@ -68,6 +83,7 @@ export class RepDetailPage {
   }
 
   like(id) {
+    console.log(id + " of item to like");
     for (let item of this.posts) {
       if (item._id == id) {
         item.likes += 1;
@@ -80,6 +96,15 @@ export class RepDetailPage {
     headers.append('Content-Type', 'application/json');
     this.http.post('http://localhost:8080/likeComment', JSON.stringify(data), { headers: headers }).subscribe((res) => {
       console.log("liking a comment", res);
+    }, (err) => {
+      console.error(err);
+    })
+  }
+
+  newMessage(name) {
+    console.log(name);
+    this.navCtrl.push(NewMessagePage, {
+      name: name
     })
   }
 

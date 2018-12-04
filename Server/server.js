@@ -2,6 +2,9 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var https = require('https');
+var http = require('http');
+var socketio = require("socket.io");
+
 var str = "";
 var bodyParser = require('body-parser'); // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
@@ -34,10 +37,9 @@ var User = mongoose.model('User', {
 });
 
 var Message = mongoose.model('Message', {
-    userTo: String,
     userFrom: String,
-    content: String,
-    id: Number
+    userTo: String,
+    content: String
 });
 
 var Post = mongoose.model('Post', {
@@ -60,9 +62,9 @@ var comment = mongoose.model('Comment', {
 app.post("/my-comments", function (req, res) {
     // console.log(owner);
     console.log(req.body);
-     let user = req.body.username;
+    let user = req.body.username;
 
-     Post.find({
+    Post.find({
         owner: user
     }, (err, post) => {
         if (err) {
@@ -74,16 +76,18 @@ app.post("/my-comments", function (req, res) {
 
 });
 
-app.post("/edit", function(req, res){
+app.post("/edit", function (req, res) {
     let des = req.body.description;
     let id = req.body.id;
-    Post.findByIdAndUpdate(
-        {_id: id},
-        {$set: {description: des}},
-        {
-            upsert: false 
+    Post.findByIdAndUpdate({
+        _id: id
+    }, {
+        $set: {
+            description: des
         }
-    ,(err, post) => {
+    }, {
+        upsert: false
+    }, (err, post) => {
         if (err) {
             res.send(err);
             return;
@@ -94,12 +98,13 @@ app.post("/edit", function(req, res){
 
 });
 
-app.post("/delete", function(req, res){
+app.post("/delete", function (req, res) {
 
     let id = req.body.id;
-    Post.findByIdAndDelete(
-        {_id: id},
-    (err, post) => {
+    Post.findByIdAndDelete({
+            _id: id
+        },
+        (err, post) => {
             if (err) {
                 res.send(err);
                 return;
@@ -264,7 +269,8 @@ app.post("/createComment", function (req, res) {
         }
         res.json({
             success: true,
-            postAdded: req.body.description
+            postAdded: req.body.description,
+            _id: newPostRes._id
         })
 
     })
@@ -273,14 +279,15 @@ app.post("/createComment", function (req, res) {
 
 app.post("/likeComment", function (req, res) {
     let id = req.body.id;
-
-
+    console.log(id);
 
     Post.findById(id, (err, postByFind) => {
         if (err) {
             console.error(err);
             return;
         }
+
+        console.log(postByFind);
 
         let like = postByFind.likes + 1;
 
@@ -300,8 +307,101 @@ app.post("/likeComment", function (req, res) {
 
         //console.log(post);
         res.json(postByFind);
+    });
+});
+
+app.post("/messageList", function (req, res) {
+    let username = req.body.userFrom;
+
+    console.log("this is the sender");
+    console.log(username);
+
+    Message.find({
+        $or: [{
+            userFrom: username,
+        }, {
+            userTo: username
+        }]
+    }, (err, arrayOfMessages) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+
+        console.log("here's the array of found messages", arrayOfMessages);
+
+        if (arrayOfMessages != null) {
+            /*let recipientList = arrayOfMessages.map(function (val) {
+                return val.userTo;
+            });*/
+
+            /*console.log("overview", recipientList);
+
+            let recipientSet = new Set(recipientList);
+
+            console.log("as a set", recipientSet);
+
+            let overview = []
+
+            for (recipient of recipientSet) {
+                overview.push(recipient);
+            }*/
+
+            res.json(arrayOfMessages);
+        }
+
+
+
+
+    });
+});
+
+app.post("/sentMessage", function (req, res) {
+    let newMessage = new Message({
+        userFrom: req.body.userFrom,
+        userTo: req.body.userTo,
+        content: req.body.message
+    });
+
+    newMessage.save((err, response) => {
+        if (err) {
+            console.log("heres an error with saving the new message below");
+            console.error(err);
+        }
+
+        res.json(response);
+    });
+});
+
+app.post("/getMessages", function (req, res) {
+    Message.find({
+        $or: [{
+            userFrom: req.body.userFrom,
+            userTo: req.body.userTo
+        }, {
+            userFrom: req.body.userTo,
+            userTo: req.body.userFrom
+        }]
+    }, (err, messagesArray) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+
+        res.json(messagesArray);
     })
 })
+
+/*var server = http.createServer(app);
+var io = socketio.listen(server);
+
+io.on("connection", (socket) => {
+    console.log("messaging started");
+
+    socket.on("message from server", (req) => {
+        console.log("something");
+    })
+})*/
 
 app.listen(8080, 'localhost', function (err) {
     if (err) return console.error(err);
