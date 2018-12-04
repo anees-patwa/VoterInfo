@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { httpFactory } from '@angular/http/src/http_module';
 import { Http, Headers } from '@angular/http';
 import { GlobalProvider } from '../../providers/global/global';
+import { ConvoPage } from '../convo/convo';
 
 /**
  * Generated class for the MessagesPage page.
@@ -31,8 +32,22 @@ export class MessagesPage {
     this.http.post('http://localhost:8080/messageList', JSON.stringify(data), { headers: headers }).subscribe((res) => {
       console.log("response after asking for message overview", res.json());
 
-      this.recipients = res.json();
+      let temp = res.json();
+      console.log(temp);
+      //this.recipients = temp;
+      let globalUser = this.global.globalUser;
 
+      temp = temp.map(function (val) {
+        if (val.userTo == globalUser) {
+          return val.userFrom;
+        } else {
+          return val.userTo;
+        }
+      });
+
+      let tempSet = new Set(temp);
+
+      this.recipients = Array.from(tempSet);
 
     }, (err) => {
       console.error(err);
@@ -54,9 +69,24 @@ export class MessagesPage {
     this.http.post('http://localhost:8080/messageList', JSON.stringify(data), { headers: headers }).subscribe((res) => {
       console.log("response after asking for message overview", res.json());
 
-      this.recipients = res.json();
+      let temp = res.json();
+      console.log(temp);
+      //this.recipients = temp;
 
+      let globalUser = this.global.globalUser;
 
+      temp = temp.map(function (val) {
+        if (val.userTo == globalUser) {
+          return val.userFrom;
+        } else {
+          return val.userTo;
+        }
+      });
+
+      let tempSet = new Set(temp);
+
+      this.recipients = Array.from(tempSet);
+      console.log("unique recipients", this.recipients);
     }, (err) => {
       console.error(err);
     })
@@ -64,7 +94,7 @@ export class MessagesPage {
 
   convo(recipient) {
     //get all messages
-    let headers = new Headers();
+    /*let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     let data = {
@@ -75,9 +105,12 @@ export class MessagesPage {
     this.http.post('http://localhost:8080/getMessages', JSON.stringify(data), { headers: headers }).subscribe((res) => {
       console.log(res.json());
 
-      this.navCtrl.push(ConvoPage);
-    })
+      
+    })*/
 
+    this.navCtrl.push(ConvoPage, {
+      userTo: recipient
+    });
     //display detail page
   }
 

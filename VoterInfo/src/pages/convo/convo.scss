@@ -1,0 +1,11 @@
+page-convo {
+  .mine {
+    background: color($colors, primary);
+    border-radius: 10px;
+  }
+
+  .other {
+    background: color($colors, light);
+    border-radius: 10px;
+  }
+}

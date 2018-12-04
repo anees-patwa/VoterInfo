@@ -1,0 +1,35 @@
+<!--
+  Generated template for the ConvoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Convo</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row *ngFor="let message of messages">
+      <ion-col col-9 class="other" *ngIf="message.userFrom !== userFrom">
+        <span>{{ message.userFrom }}:</span><br>
+        <span>{{ message.content }}</span>
+      </ion-col>
+
+      <ion-col offset-3 col-9 class="mine" *ngIf="message.userFrom === userFrom">
+        <span>{{ message.userFrom }}:</span><br>
+        <span>{{ message.content }}</span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <button ion-button (click)="sendMessage(userTo)" *ngIf="global.globalIsRep">Message</button>
+
+
+
+</ion-content>

@@ -23,6 +23,7 @@ import { RepDetailPage } from '../pages/rep-detail/rep-detail';
 import { MessagesPage } from '../pages/messages/messages';
 import { EditCommentPage } from '../pages/edit-comment/edit-comment';
 import { NewMessagePage } from '../pages/new-message/new-message';
+import { ConvoPage } from '../pages/convo/convo';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { NewMessagePage } from '../pages/new-message/new-message';
     RepDetailPage,
     MessagesPage,
     EditCommentPage,
-    NewMessagePage
+    NewMessagePage,
+    ConvoPage
   ],
   imports: [
     BrowserModule,
@@ -63,8 +65,8 @@ import { NewMessagePage } from '../pages/new-message/new-message';
     RepDetailPage,
     MessagesPage,
     EditCommentPage,
-    NewMessagePage
-
+    NewMessagePage,
+    ConvoPage
   ],
   providers: [
     StatusBar,

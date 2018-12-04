@@ -317,7 +317,11 @@ app.post("/messageList", function (req, res) {
     console.log(username);
 
     Message.find({
-        userFrom: username
+        $or: [{
+            userFrom: username,
+        }, {
+            userTo: username
+        }]
     }, (err, arrayOfMessages) => {
         if (err) {
             console.error(err);
@@ -327,11 +331,11 @@ app.post("/messageList", function (req, res) {
         console.log("here's the array of found messages", arrayOfMessages);
 
         if (arrayOfMessages != null) {
-            let recipientList = arrayOfMessages.map(function (val) {
+            /*let recipientList = arrayOfMessages.map(function (val) {
                 return val.userTo;
-            });
+            });*/
 
-            console.log("overview", recipientList);
+            /*console.log("overview", recipientList);
 
             let recipientSet = new Set(recipientList);
 
@@ -341,9 +345,9 @@ app.post("/messageList", function (req, res) {
 
             for (recipient of recipientSet) {
                 overview.push(recipient);
-            }
+            }*/
 
-            res.json(overview);
+            res.json(arrayOfMessages);
         }
 
 
@@ -368,6 +372,25 @@ app.post("/sentMessage", function (req, res) {
         res.json(response);
     });
 });
+
+app.post("/getMessages", function (req, res) {
+    Message.find({
+        $or: [{
+            userFrom: req.body.userFrom,
+            userTo: req.body.userTo
+        }, {
+            userFrom: req.body.userTo,
+            userTo: req.body.userFrom
+        }]
+    }, (err, messagesArray) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+
+        res.json(messagesArray);
+    })
+})
 
 /*var server = http.createServer(app);
 var io = socketio.listen(server);
