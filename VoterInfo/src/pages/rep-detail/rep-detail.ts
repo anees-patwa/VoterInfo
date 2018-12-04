@@ -4,6 +4,7 @@ import { GlobalProvider } from '../../providers/global/global';
 import { Http, Headers } from '@angular/http';
 import { NewMessagePage } from '../new-message/new-message';
 
+
 /**
  * Generated class for the RepDetailPage page.
  *
