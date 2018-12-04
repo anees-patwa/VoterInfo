@@ -3,7 +3,7 @@ page-sign-up {
         text-align: center;
     }
     
-    ion-label{
+    .label{
         margin-top: 4% !important;
         margin-left: 25% !important;
         margin-left: 100px;
@@ -22,7 +22,13 @@ page-sign-up {
     button{
         margin-top: 3% !important;
     }
-        
+
+        #check{
+      
+            display: block !important;
+            margin-left: 352px;
+     
+        }
     }
 
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams } from 'ionic-angular';
+import { NavParams, NavController } from 'ionic-angular';
 import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
@@ -19,7 +19,11 @@ export class TabsPage {
   tab3Root = MessagesPage;
   username: any;
 
+
   constructor(public navParams: NavParams) {
     this.username = navParams.get('username');
   }
+    logOut(){
+      window.location.reload();
+    }
 }
