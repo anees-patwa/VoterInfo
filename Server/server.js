@@ -77,6 +77,7 @@ app.post("/my-comments", function (req, res) {
 app.post("/edit", function(req, res){
     let des = req.body.description;
     let id = req.body.id;
+    let candidate = req.body.candidate;
     Post.findByIdAndUpdate(
         {_id: id},
         {$set: {description: des}},
@@ -89,6 +90,7 @@ app.post("/edit", function(req, res){
             return;
         }
         res.json(post);
+        
     });
 
 

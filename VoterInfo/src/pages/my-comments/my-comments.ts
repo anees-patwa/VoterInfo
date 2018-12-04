@@ -22,14 +22,19 @@ export class MyCommentsPage {
   title: any;
   description: any;
   _id: any;
+  likes: any;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public global: GlobalProvider, public http: Http) {
-  
+    // this.description = navParams.get('description');
   }
 
   ionViewDidLoad() {
-    this.refreshComments();
+  
     // document.getElementById('editForm').style.display = "none";
+  }
+
+  ionViewWillEnter(){
+    this.refreshComments();
   }
 
   deleteComment(id){
@@ -48,8 +53,6 @@ export class MyCommentsPage {
 
 
     for(let i = 0; i < this.comments.length; ++i){
-      console.log("This is checking objects " + Object.is(data.id, this.comments[i]._id));
-  
       if(Object.is(data.id, this.comments[i]._id)){
         this.comments.splice(i, 1);
       }
@@ -67,40 +70,48 @@ export class MyCommentsPage {
   
   editComment(id){
     let username = this.global.globalUser;
+    let candidate = this.candidate;
     let title = this.title; 
     let description = this.description;
+    let likes = this.likes;
     let headers = new Headers();
   
     headers.append('Content-Type', 'application/json');
 
     let data = {
       username: username,
+      candidate: candidate,
       title: title,
       description: description,
-      id: id
+      id: id,
+      likes: likes
     };
 
-    // for(let i = 0; i < this.comments.length; ++i){
-    //   if(data.id == this.comments[i]._id){
-    //     this.comments.splice(this.comments[i]._id, 1);
-    //   }
-    // }
+    for(let i = 0; i < this.comments.length; ++i){
+      if(Object.is(data.id, this.comments[i]._id)){
+        this.comments.splice(i, 1);
+      }
+    }
 
-    this.http.post('http://localhost:8080/edit', JSON.stringify(data), { headers: headers }).subscribe((res) => {
-      console.log(res.json());
-      this.navCtrl.push(EditCommentPage, {
-        id: id
-      });
+    this.navCtrl.push(EditCommentPage, {
+      id: id,
+      username: username,
+      candidate: candidate,
+      title: title,
+      description: description,
+      likes: likes
       
+    });
+
+    /*this.http.post('http://localhost:8080/edit', JSON.stringify(data), { headers: headers }).subscribe((res) => {
+      console.log(res.json());
+      
+      data = res.json();
+    //ion view refresh comments completely ovewrite comments array and edit ppage 
+      this.comments.push(data);
     }, (err) => {
       console.error(err);
-    })
-
-    // for(let i = 0; i < this.comments.length; ++i){
-    //   if(data.id == this.comments[i]._id){
-    //     this.comments.splice(this.comments[i]._id, 0, "data");
-    //   }
-    // }
+    })   */   
 
     // document.getElementById('editForm').style.display = "none";
   }
