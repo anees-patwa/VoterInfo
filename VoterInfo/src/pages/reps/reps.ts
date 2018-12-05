@@ -53,5 +53,8 @@ export class RepsPage {
 
 
   }
+  logOut(){
+    window.location.reload();
+  }
 
 }

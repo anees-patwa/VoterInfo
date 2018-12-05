@@ -50,4 +50,8 @@ export class AddressPage {
 
   }
 
+  logOut(){
+    window.location.reload();
+  }
+
 }

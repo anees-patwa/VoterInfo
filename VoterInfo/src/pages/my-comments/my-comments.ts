@@ -135,5 +135,8 @@ export class MyCommentsPage {
       console.error(err);
     })
   }
+  logOut(){
+    window.location.reload();
+  }
 
 }
