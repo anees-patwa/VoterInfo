@@ -67,4 +67,8 @@ export class EditCommentPage {
     // document.getElementById('editForm').style.display = "none";
   }
 
+  logOut(){
+    window.location.reload();
+  }
+
 }

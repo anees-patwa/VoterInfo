@@ -109,4 +109,8 @@ export class RepDetailPage {
     })
   }
 
+  logOut(){
+    window.location.reload();
+  }
+
 }

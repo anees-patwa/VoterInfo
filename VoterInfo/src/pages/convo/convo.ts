@@ -59,4 +59,8 @@ export class ConvoPage {
 
   }
 
+  logOut(){
+    window.location.reload();
+  }
+
 }

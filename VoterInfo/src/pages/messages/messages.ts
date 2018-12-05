@@ -114,6 +114,10 @@ export class MessagesPage {
     //display detail page
   }
 
+  logOut(){
+    window.location.reload();
+  }
+
 
 
 
